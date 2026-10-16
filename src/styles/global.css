@@ -1,21 +1,24 @@
 :root {
-  /* Palette — hue 255 (blueprint ink) and 45 (copper). Neutrals tinted warm. */
+  /* Palette — brand ultramarine (hue 273, sampled from the LM monogram) with a
+     copper accent reserved for calls to action and "live current". Paper stays warm. */
   --paper: oklch(0.966 0.013 80);
   --paper-2: oklch(0.935 0.019 76);
   --paper-3: oklch(0.895 0.024 72);
   --rule: oklch(0.80 0.025 72);
-  --ink: oklch(0.235 0.038 255);
-  --ink-2: oklch(0.40 0.032 255);
-  --ink-3: oklch(0.52 0.026 255);
-  --steel: oklch(0.215 0.034 255);
-  --steel-2: oklch(0.285 0.036 255);
-  --steel-rule: oklch(0.38 0.035 255);
-  --on-steel: oklch(0.95 0.013 80);
-  --on-steel-2: oklch(0.80 0.02 250);
-  --copper: oklch(0.585 0.138 46);
+  --brand: oklch(0.36 0.19 272);
+  --brand-bright: oklch(0.45 0.21 272);
+  --ink: oklch(0.235 0.06 273);
+  --ink-2: oklch(0.40 0.05 273);
+  --ink-3: oklch(0.51 0.04 273);
+  --steel: oklch(0.255 0.12 273);
+  --steel-2: oklch(0.31 0.13 273);
+  --steel-rule: oklch(0.42 0.12 273);
+  --on-steel: oklch(0.96 0.012 80);
+  --on-steel-2: oklch(0.83 0.04 273);
+  --copper: oklch(0.62 0.145 48);
   --copper-deep: oklch(0.50 0.13 42);
-  --copper-glow: oklch(0.72 0.13 55);
-  --blueprint: oklch(0.88 0.03 245);
+  --copper-glow: oklch(0.75 0.13 58);
+  --blueprint: oklch(0.885 0.04 273);
 
   --font-display: 'Archivo Variable', 'Arial Narrow', sans-serif;
   --font-body: 'Public Sans Variable', 'Helvetica Neue', sans-serif;

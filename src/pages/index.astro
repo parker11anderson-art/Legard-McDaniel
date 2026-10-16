@@ -4,6 +4,7 @@ import PanelDrawing from '../components/PanelDrawing.astro';
 import HouseDrawing from '../components/HouseDrawing.astro';
 import StorefrontDrawing from '../components/StorefrontDrawing.astro';
 import AreaDiagram from '../components/AreaDiagram.astro';
+import Monogram from '../components/Monogram.astro';
 import { business as b } from '../data/business';
 
 const years = new Date().getFullYear() - b.founded;
@@ -37,10 +38,8 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
   <header class="bar">
     <div class="wrap bar__in">
       <a href="/" class="brand" aria-label={`${b.name}, home`}>
-        <span class="brand__mark" aria-hidden="true">
-          <svg viewBox="0 0 32 32" width="34" height="34"><rect width="32" height="32" fill="var(--ink)" /><path d="M8 7v18h7" fill="none" stroke="var(--paper)" stroke-width="3.2" stroke-linecap="square" /><path d="M21 6l-4 10h5l-4 10" fill="none" stroke="var(--copper)" stroke-width="2.6" stroke-linecap="square" /></svg>
-        </span>
-        <span class="brand__name">Legard-McDaniel<span>Electric</span></span>
+        <Monogram size={30} class="brand__mark" />
+        <span class="brand__name">Legard-McDaniel<span>Electrical Contracting</span></span>
       </a>
       <nav aria-label="Primary" class="nav">
         <a href="#services">Services</a>
@@ -239,6 +238,10 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
   </main>
 
   <footer class="foot">
+    <div class="wrap foot__brand">
+      <Monogram size={64} class="foot__mark" title={b.legalName} />
+      <p class="foot__name">Legard&#8209;McDaniel<span>Electrical Contracting · Mesa, Arizona · Since {b.founded}</span></p>
+    </div>
     <div class="wrap foot__in">
       <p><strong>{b.legalName}</strong> · {b.street}, {b.city}, {b.region} {b.postal} · {b.license}</p>
       <p>© {new Date().getFullYear()} {b.name}. Serving the East Valley since {b.founded}.</p>
@@ -275,23 +278,29 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     text-decoration: none;
     margin-right: auto;
   }
+  .brand :global(.brand__mark) {
+    color: var(--brand);
+    flex: none;
+  }
   .brand__name {
     display: flex;
     flex-direction: column;
     font-family: var(--font-display);
-    font-stretch: 112%;
+    font-style: italic;
+    font-stretch: 110%;
     font-weight: 850;
     font-size: 1.12rem;
     line-height: 1;
     letter-spacing: -0.01em;
   }
   .brand__name span {
+    font-style: normal;
     font-stretch: 80%;
     font-weight: 650;
-    font-size: 0.72rem;
-    letter-spacing: 0.32em;
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--copper-deep);
+    color: var(--brand);
     margin-top: 0.3rem;
   }
   .nav {
@@ -330,7 +339,7 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     align-items: center;
   }
   .hero__eyebrow {
-    color: var(--copper-deep);
+    color: var(--brand);
     margin-bottom: var(--space-lg);
   }
   .hero__title {
@@ -342,7 +351,7 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     max-width: 13ch;
   }
   .hero__year {
-    color: var(--copper-deep);
+    color: var(--brand);
     white-space: nowrap;
   }
   .hero__lede {
@@ -521,7 +530,7 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     font-weight: 800;
     font-size: 1.05rem;
     font-variant-numeric: tabular-nums;
-    color: var(--copper-deep);
+    color: var(--brand);
     border-right: 1px solid var(--rule);
     background: color-mix(in oklch, var(--paper-2) 60%, transparent);
   }
@@ -552,7 +561,7 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     color: var(--ink-2);
   }
   .circuit:last-child strong {
-    color: var(--copper-deep);
+    color: var(--brand);
   }
 
   /* ---------- Split ---------- */
@@ -578,7 +587,7 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     margin-bottom: var(--space-md);
   }
   .split__kicker {
-    color: var(--copper-deep);
+    color: var(--brand);
   }
   .split h3 {
     font-size: var(--step-2);
@@ -602,7 +611,7 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     margin-bottom: var(--space-3xl);
   }
   .process__head .label {
-    color: var(--copper-deep);
+    color: var(--brand);
   }
   .process__head h2 {
     font-size: var(--step-3);
@@ -746,7 +755,7 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
     align-items: end;
   }
   .contact .label {
-    color: var(--copper-deep);
+    color: var(--brand);
   }
   .contact h2 {
     margin-top: var(--space-md);
@@ -810,10 +819,44 @@ const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 1
 
   /* ---------- Footer ---------- */
   .foot {
-    background: var(--ink);
+    background: var(--steel);
     color: var(--on-steel-2);
-    padding-block: var(--space-2xl);
+    padding-block: var(--space-3xl) var(--space-2xl);
     font-size: var(--step--1);
+  }
+  .foot__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--steel-rule);
+  }
+  .foot__brand :global(.foot__mark) {
+    color: var(--on-steel);
+    flex: none;
+    width: auto;
+    height: clamp(2.75rem, 2rem + 2vw, 4rem);
+  }
+  .foot__name {
+    display: grid;
+    gap: var(--space-xs);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-stretch: 112%;
+    font-weight: 850;
+    font-size: var(--step-2);
+    line-height: 1;
+    color: var(--on-steel);
+  }
+  .foot__name span {
+    font-style: normal;
+    font-stretch: 85%;
+    font-weight: 600;
+    font-size: var(--step--1);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--on-steel-2);
   }
   .foot__in {
     display: flex;

@@ -1,0 +1,37 @@
+---
+// Vector redraw of the Legard-McDaniel "LM" monogram: slanted heavy strokes
+// with the original's thin inline stripes cut through each upright.
+interface Props {
+  size?: number;
+  title?: string;
+  class?: string;
+}
+const { size = 48, title, class: className } = Astro.props;
+const id = `lm-${Math.random().toString(36).slice(2, 8)}`;
+---
+<svg
+  class={className}
+  viewBox="0 0 198 100"
+  width={Math.round(size * 1.98)}
+  height={size}
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  aria-label={title}
+>
+  <defs>
+    <mask id={id} maskUnits="userSpaceOnUse" x="0" y="0" width="198" height="100">
+      <rect width="198" height="100" fill="#fff" />
+      <g fill="#000">
+        <rect x="15" y="7" width="4.5" height="64" />
+        <rect x="27" y="0" width="6" height="77" />
+        <rect x="46" y="7" width="4.5" height="64" />
+        <rect x="144" y="7" width="4.5" height="86" />
+        <path d="M62 20 V77 H86 Z" />
+      </g>
+    </mask>
+  </defs>
+  <g transform="translate(38 0) skewX(-21)" mask={`url(#${id})`} fill="currentColor">
+    <path d="M0 0 H30 V77 H118 V100 H0 Z" />
+    <path d="M37 0 H88 L110 42 L128 0 H158 V100 H130 V52 L114 86 H37 Z" />
+  </g>
+</svg>
