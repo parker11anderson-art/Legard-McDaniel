@@ -1,0 +1,149 @@
+---
+// Hero illustration: a drafted 200A load center under the Superstition ridgeline.
+const rows = [0, 1, 2, 3, 4, 5];
+const rowY = (i: number) => 322 + i * 36;
+---
+<svg
+  class="panel-drawing"
+  viewBox="0 0 560 640"
+  role="img"
+  aria-labelledby="panel-title"
+>
+  <title id="panel-title">Line drawing of an open residential electrical panel beneath the Superstition Mountains</title>
+  <defs>
+    <pattern id="grid-fine" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0H0V20" fill="none" stroke="var(--blueprint)" stroke-width="0.6" />
+    </pattern>
+    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#grid-fine)" />
+      <path d="M100 0H0V100" fill="none" stroke="var(--blueprint)" stroke-width="1.2" />
+    </pattern>
+  </defs>
+
+  <rect width="560" height="640" fill="url(#grid)" />
+
+  <!-- Sun + Superstition ridgeline -->
+  <circle cx="436" cy="84" r="34" fill="none" stroke="var(--copper)" stroke-width="2" />
+  <path
+    class="ridge"
+    d="M0 192 L48 184 L78 168 L96 150 L118 160 L146 116 L166 122 L188 92 L203 99 L221 68 L238 86 L258 78 L276 106 L306 100 L336 130 L372 122 L404 146 L452 142 L500 166 L560 160"
+    fill="none"
+    stroke="var(--ink)"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+  <path d="M0 192 L48 184 L78 168 L96 150 L118 160 L146 116 L166 122 L188 92 L203 99 L221 68 L238 86 L258 78 L276 106 L306 100 L336 130 L372 122 L404 146 L452 142 L500 166 L560 160 V200 H0Z" fill="var(--paper-2)" opacity="0.7" />
+  <path d="M188 92 L196 130 M221 68 L226 112 M146 116 L152 146 M258 78 L262 118" stroke="var(--ink-3)" stroke-width="1" />
+
+  <!-- Conduit runs -->
+  <g fill="none" stroke="var(--ink)" stroke-width="7" stroke-linecap="square">
+    <path d="M196 232 V214 H0" />
+    <path d="M324 232 V214 H560" />
+    <path d="M260 560 V604 H560" />
+  </g>
+  <g fill="none" stroke="var(--paper)" stroke-width="3" stroke-linecap="square">
+    <path d="M196 232 V214 H0" />
+    <path d="M324 232 V214 H560" />
+    <path d="M260 560 V604 H560" />
+  </g>
+  <g class="current" fill="none" stroke="var(--copper)" stroke-width="3" stroke-dasharray="10 22">
+    <path d="M0 214 H196 V232" />
+    <path d="M560 214 H324 V232" />
+    <path d="M260 560 V604 H560" />
+  </g>
+
+  <!-- Enclosure -->
+  <rect x="150" y="230" width="220" height="330" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="3" />
+  <rect x="166" y="246" width="188" height="298" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+
+  <!-- Main breaker -->
+  <rect x="222" y="260" width="76" height="42" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2" />
+  <rect x="250" y="268" width="20" height="26" fill="var(--ink)" />
+  <text x="260" y="316" text-anchor="middle" class="t-small">MAIN 200A</text>
+
+  <!-- Bus -->
+  <line x1="260" y1="320" x2="260" y2="536" stroke="var(--copper)" stroke-width="4" />
+
+  <!-- Branch breakers -->
+  {
+    rows.map((i) => (
+      <g>
+        <rect x="178" y={rowY(i)} width="70" height="26" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="1.5" />
+        <rect x="230" y={rowY(i) + 7} width="14" height="12" fill="var(--ink)" />
+        <text x="190" y={rowY(i) + 18} class="t-tiny">{i * 2 + 1}</text>
+        <rect x="272" y={rowY(i)} width="70" height="26" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="1.5" />
+        <rect x="276" y={rowY(i) + 7} width="14" height="12" fill={i === 2 ? 'var(--copper)' : 'var(--ink)'} />
+        <text x="322" y={rowY(i) + 18} class="t-tiny">{i * 2 + 2}</text>
+      </g>
+    ))
+  }
+
+  <!-- Open door with directory card -->
+  <path d="M370 230 L476 254 V586 L370 560 Z" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round" />
+  <path d="M384 262 L462 280 V420 L384 404 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2" />
+  <g stroke="var(--ink-3)" stroke-width="1">
+    <path d="M390 282 L456 297" />
+    <path d="M390 298 L446 311" />
+    <path d="M390 314 L452 328" />
+    <path d="M390 330 L440 341" />
+    <path d="M390 346 L454 361" />
+    <path d="M390 362 L444 373" />
+    <path d="M390 378 L450 392" />
+  </g>
+  <circle cx="380" cy="400" r="4" fill="var(--ink)" />
+
+  <!-- Dimension line -->
+  <g stroke="var(--ink-2)" stroke-width="1.2">
+    <line x1="116" y1="230" x2="116" y2="560" />
+    <line x1="106" y1="230" x2="140" y2="230" />
+    <line x1="106" y1="560" x2="140" y2="560" />
+    <path d="M112 242 L116 230 L120 242 M112 548 L116 560 L120 548" fill="none" />
+  </g>
+  <text x="100" y="395" class="t-small" transform="rotate(-90 100 395)" text-anchor="middle">SERVICE PANEL · 200A · 120/240V</text>
+
+  <!-- Title block -->
+  <g>
+    <rect x="16" y="582" width="214" height="44" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" />
+    <line x1="16" y1="602" x2="230" y2="602" stroke="var(--ink)" stroke-width="1" />
+    <line x1="92" y1="602" x2="92" y2="626" stroke="var(--ink)" stroke-width="1" />
+    <text x="24" y="597" class="t-small">LEGARD-MCDANIEL ELECTRIC</text>
+    <text x="24" y="619" class="t-tiny">DWG LM-01</text>
+    <text x="100" y="619" class="t-tiny">MESA, AZ 85204</text>
+  </g>
+</svg>
+
+<style>
+  .panel-drawing {
+    width: 100%;
+    height: auto;
+  }
+  .t-small {
+    font-family: var(--font-display);
+    font-stretch: 80%;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    fill: var(--ink-2);
+  }
+  .t-tiny {
+    font-family: var(--font-display);
+    font-stretch: 80%;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    fill: var(--ink-3);
+  }
+  .current path {
+    animation: flow 2.4s linear infinite;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -64;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .current path {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,969 @@
+---
+import Base from '../layouts/Base.astro';
+import PanelDrawing from '../components/PanelDrawing.astro';
+import HouseDrawing from '../components/HouseDrawing.astro';
+import StorefrontDrawing from '../components/StorefrontDrawing.astro';
+import AreaDiagram from '../components/AreaDiagram.astro';
+import { business as b } from '../data/business';
+
+const years = new Date().getFullYear() - b.founded;
+
+// Services laid out as a panel directory: odd circuits left, even right.
+const circuits = [
+  { n: 1, name: 'Troubleshooting & repair', note: 'Tripping breakers, dead outlets, flicker, hot switches' },
+  { n: 2, name: 'Panel upgrades', note: 'Undersized, recalled, or end-of-life panels; 200A service' },
+  { n: 3, name: 'Lighting', note: 'Recessed, interior, exterior, and landscape' },
+  { n: 4, name: 'Home automation', note: 'Smart switches, dimming, scheduled lighting' },
+  { n: 5, name: 'Fans & fixtures', note: 'Ceiling fans, new boxes, fixture swaps' },
+  { n: 6, name: 'EV chargers', note: 'Level 2 circuits, load checks, garage installs' },
+  { n: 7, name: 'Outlets & protection', note: 'GFCI, AFCI, added circuits, surge protection' },
+  { n: 8, name: 'Remodels & additions', note: 'Rough-in through trim-out, permit-ready' },
+  { n: 9, name: 'Tenant improvements', note: 'Suite build-outs for retail, office, and medical' },
+  { n: 10, name: 'Commercial new builds', note: 'Ground-up electrical for commercial projects' },
+  { n: 11, name: 'Maintenance', note: 'Scheduled service for buildings and facilities' },
+  { n: 12, name: 'The small stuff', note: 'Yes, we still come out for a bulb change-out' },
+];
+
+const steps = [
+  { t: 'Call the shop', d: `Weekdays ${b.hoursLabel.replace('Mon–Fri · ', '')}. Tell us what you're seeing — we'll ask the right questions.` },
+  { t: 'Get a time', d: 'We book a window that works for you, and we show up inside it.' },
+  { t: 'Fixed to code', d: 'The work is done right, tested, and explained in plain English before we call it finished.' },
+  { t: 'Left clean', d: 'Drop cloths down, debris out, and the panel cover back on. Your house looks like we were never there.' },
+];
+
+const Phone = 'M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2';
+---
+<Base title={`${b.name} | Licensed Electricians in Mesa, AZ Since ${b.founded}`}>
+  <header class="bar">
+    <div class="wrap bar__in">
+      <a href="/" class="brand" aria-label={`${b.name}, home`}>
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="34" height="34"><rect width="32" height="32" fill="var(--ink)" /><path d="M8 7v18h7" fill="none" stroke="var(--paper)" stroke-width="3.2" stroke-linecap="square" /><path d="M21 6l-4 10h5l-4 10" fill="none" stroke="var(--copper)" stroke-width="2.6" stroke-linecap="square" /></svg>
+        </span>
+        <span class="brand__name">Legard-McDaniel<span>Electric</span></span>
+      </a>
+      <nav aria-label="Primary" class="nav">
+        <a href="#services">Services</a>
+        <a href="#process">How it works</a>
+        <a href="#area">Service area</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn bar__call" href={b.phoneHref}>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d={Phone} /></svg>
+        {b.phone}
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="label hero__eyebrow rise" style="--d:0">Electrical contractor · Mesa, Arizona</p>
+          <h1 class="hero__title rise" style="--d:1">
+            Wiring the East&nbsp;Valley since <span class="hero__year">{b.founded}.</span>
+          </h1>
+          <p class="hero__lede rise" style="--d:2">
+            Homes and businesses across Mesa and the East Valley have called the shop on Javelina Avenue for {years} years —
+            for a breaker that won't reset, a panel that's past its life, or a full commercial build-out.
+          </p>
+          <div class="hero__ctas rise" style="--d:3">
+            <a class="btn btn--big" href={b.phoneHref}>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d={Phone} /></svg>
+              Call {b.phone}
+            </a>
+            <a class="btn btn--ghost" href="#services">See what we handle</a>
+          </div>
+          <p class="hero__hours rise" style="--d:4">
+            <span class="dot" aria-hidden="true"></span>Shop phones open {b.hoursLabel}
+          </p>
+        </div>
+
+        <div class="hero__art rise" style="--d:2">
+          <PanelDrawing />
+        </div>
+      </div>
+
+      <!-- Rating plate -->
+      <div class="wrap">
+        <dl class="plate rise" style="--d:5" aria-label="Company facts">
+          <div class="plate__head label">Rating plate</div>
+          <div><dt>Contractor</dt><dd>{b.legalName}</dd></div>
+          <div><dt>Established</dt><dd>{b.founded}</dd></div>
+          <div><dt>License</dt><dd>{b.license}</dd></div>
+          <div><dt>Work</dt><dd>Residential · Commercial</dd></div>
+          <div><dt>Shop</dt><dd>{b.street}, {b.city}</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- SERVICES: PANEL SCHEDULE -->
+    <section class="services" id="services" aria-labelledby="services-h">
+      <div class="wrap services__grid">
+        <div class="services__intro">
+          <p class="label services__kicker">Panel directory</p>
+          <h2 id="services-h">From a bulb change&#8209;out to a full&#8209;scale rewire.</h2>
+          <p>
+            Twelve circuits, one crew. If it runs on electricity in a house or a commercial building, we install it,
+            repair it, or bring it up to code.
+          </p>
+          <a class="btn" href={b.phoneHref}>Call about your project</a>
+        </div>
+
+        <div class="panel">
+          <div class="panel__top" aria-hidden="true">
+            <span class="label">Circuit directory</span>
+            <span class="label">120/240V · 1Ø</span>
+          </div>
+          <ul class="panel__body" aria-label="Services">
+            {
+              circuits.map((c) => (
+                <li class="circuit">
+                  <span class="circuit__n" aria-hidden="true">{String(c.n).padStart(2, '0')}</span>
+                  <span class="circuit__text">
+                    <strong>{c.name}</strong>
+                    <span>{c.note}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOME / BUSINESS -->
+    <section class="split" aria-label="Residential and commercial work">
+      <div class="wrap split__grid">
+        <article class="split__item">
+          <div class="split__art"><HouseDrawing /></div>
+          <p class="label split__kicker">Residential</p>
+          <h3>For the house you've lived in for twenty years — and the one you just bought.</h3>
+          <p>
+            A lot of East Valley homes are running on their original panels and wiring. We find what's tired, fix what's
+            unsafe, and add what modern life asks for: EV chargers, smart controls, better light.
+          </p>
+        </article>
+        <article class="split__item">
+          <div class="split__art"><StorefrontDrawing /></div>
+          <p class="label split__kicker">Commercial</p>
+          <h3>Tenant improvements and new builds, run like a schedule matters.</h3>
+          <p>
+            Owners, property managers, and general contractors bring us in for suite build-outs, ground-up projects, and
+            the maintenance that keeps a building open. Licensed, insured, and used to working around a business that
+            can't close.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process" id="process" aria-labelledby="process-h">
+      <div class="wrap">
+        <div class="process__head">
+          <p class="label">How a service call goes</p>
+          <h2 id="process-h">Four steps. No surprises.</h2>
+        </div>
+        <ol class="steps">
+          {
+            steps.map((s, i) => (
+              <li class="step">
+                <span class="step__node" aria-hidden="true">{i + 1}</span>
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="quote" aria-label="Customer review">
+      <div class="wrap quote__in">
+        <svg class="quote__mark" viewBox="0 0 60 48" width="60" height="48" aria-hidden="true"><path d="M0 48V28C0 12 8 3 24 0l3 7C17 10 13 16 13 24h11v24zm33 0V28C33 12 41 3 57 0l3 7c-10 3-14 9-14 17h11v24z" fill="var(--copper)" /></svg>
+        <blockquote>
+          <p>Timely appointments and knowledgeable staff!</p>
+        </blockquote>
+        <p class="quote__by"><span class="label">Paul F.</span> · Google review</p>
+      </div>
+    </section>
+
+    <!-- AREA -->
+    <section class="area-sec" id="area" aria-labelledby="area-h">
+      <div class="wrap area-sec__grid">
+        <div class="area-sec__copy">
+          <p class="label">Service area</p>
+          <h2 id="area-h">Fed from Mesa. Across the East&nbsp;Valley.</h2>
+          <p>Our trucks run out of the shop at {b.street} every morning. If you're in one of these cities, you're on our circuit.</p>
+          <ul class="cities">
+            {b.serviceArea.map((c) => <li>{c}</li>)}
+          </ul>
+          <p class="area-sec__note">Not on the list? Call anyway — if we can get there, we'll tell you.</p>
+        </div>
+        <div class="area-sec__art">
+          <AreaDiagram />
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact" aria-labelledby="contact-h">
+      <div class="wrap contact__grid">
+        <div>
+          <p class="label">Talk to the shop</p>
+          <h2 id="contact-h">Something not working right? Call us.</h2>
+          <a class="contact__phone" href={b.phoneHref}>{b.phone}</a>
+          <p class="contact__sub">The fastest way to get on the schedule. Have the address and a quick description of the problem ready.</p>
+        </div>
+        <dl class="contact__facts">
+          <div>
+            <dt class="label">Hours</dt>
+            <dd>Monday – Friday<br />6:00 AM – 4:00 PM</dd>
+          </div>
+          <div>
+            <dt class="label">Shop</dt>
+            <dd>
+              {b.street}<br />{b.city}, {b.region} {b.postal}<br />
+              <a href={b.mapsHref} rel="noopener" target="_blank">Get directions <span class="visually-hidden">(opens Google Maps)</span>→</a>
+            </dd>
+          </div>
+          <div>
+            <dt class="label">License</dt>
+            <dd>{b.license}<br />Licensed &amp; insured</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <p><strong>{b.legalName}</strong> · {b.street}, {b.city}, {b.region} {b.postal} · {b.license}</p>
+      <p>© {new Date().getFullYear()} {b.name}. Serving the East Valley since {b.founded}.</p>
+    </div>
+  </footer>
+
+  <!-- Mobile call bar -->
+  <a class="callbar" href={b.phoneHref}>
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d={Phone} /></svg>
+    <span>Call the shop · {b.phone}</span>
+  </a>
+</Base>
+
+<style>
+  /* ---------- Top bar ---------- */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in oklch, var(--paper) 92%, transparent);
+    backdrop-filter: saturate(1.2) blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar__in {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    min-height: 4.5rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .brand__name {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-weight: 850;
+    font-size: 1.12rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .brand__name span {
+    font-stretch: 80%;
+    font-weight: 650;
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--copper-deep);
+    margin-top: 0.3rem;
+  }
+  .nav {
+    display: flex;
+    gap: var(--space-lg);
+  }
+  .nav a {
+    font-family: var(--font-display);
+    font-stretch: 90%;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    padding-block: var(--space-xs);
+    background: linear-gradient(var(--copper), var(--copper)) 0 100% / 0 2px no-repeat;
+    transition: background-size 220ms var(--ease-out);
+  }
+  .nav a:hover {
+    background-size: 100% 2px;
+  }
+  .bar__call {
+    min-height: 2.75rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.98rem;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding-top: clamp(2.5rem, 1rem + 5vw, 5.5rem);
+    padding-bottom: var(--section);
+    overflow: clip;
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: center;
+  }
+  .hero__eyebrow {
+    color: var(--copper-deep);
+    margin-bottom: var(--space-lg);
+  }
+  .hero__title {
+    font-size: var(--step-4);
+    font-stretch: 116%;
+    font-weight: 850;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    max-width: 13ch;
+  }
+  .hero__year {
+    color: var(--copper-deep);
+    white-space: nowrap;
+  }
+  .hero__lede {
+    margin-top: var(--space-xl);
+    max-width: 44ch;
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+  }
+  .btn--big {
+    font-size: var(--step-1);
+    min-height: 3.75rem;
+    padding-inline: 1.6rem;
+  }
+  .hero__hours {
+    margin-top: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--ink-3);
+    font-size: var(--step--1);
+  }
+  .dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--copper);
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--copper) 22%, transparent);
+  }
+  .hero__art {
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+  }
+
+  /* Rating plate */
+  .plate {
+    margin: clamp(2.5rem, 1rem + 4vw, 4.5rem) 0 0;
+    display: grid;
+    grid-template-columns: auto repeat(5, minmax(0, 1fr));
+    border: 2px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .plate > div {
+    padding: var(--space-md) var(--space-lg);
+    border-left: 1px solid var(--rule);
+  }
+  .plate__head {
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--paper);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    padding: var(--space-md) var(--space-xs) !important;
+    border: 0 !important;
+    font-size: 0.7rem;
+  }
+  .plate dt {
+    font-family: var(--font-display);
+    font-stretch: 80%;
+    font-weight: 650;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .plate dd {
+    margin: 0.2rem 0 0;
+    font-family: var(--font-display);
+    font-stretch: 95%;
+    font-weight: 700;
+    font-size: 1.02rem;
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Services ---------- */
+  .services {
+    background: var(--steel);
+    color: var(--on-steel);
+    padding-block: var(--section);
+    position: relative;
+  }
+  .services::before {
+    /* faint knockout pattern, like a panel enclosure */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at center, var(--steel-rule) 1.2px, transparent 1.6px);
+    background-size: 28px 28px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .services__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+  .services__intro {
+    position: sticky;
+    top: 7rem;
+    display: grid;
+    gap: var(--space-lg);
+    justify-items: start;
+  }
+  .services__kicker {
+    color: var(--copper-glow);
+  }
+  .services__intro h2 {
+    font-size: var(--step-3);
+    font-stretch: 108%;
+  }
+  .services__intro p:not(.label) {
+    color: var(--on-steel-2);
+    max-width: 38ch;
+  }
+  .services .btn {
+    --_bg: var(--copper);
+    margin-top: var(--space-sm);
+  }
+  .services .btn:hover {
+    --_bg: var(--on-steel);
+    --_fg: var(--steel);
+    border-color: var(--on-steel);
+  }
+
+  .panel {
+    background: var(--paper);
+    color: var(--ink);
+    border: 2px solid var(--on-steel);
+    box-shadow:
+      0 0 0 10px var(--steel-2),
+      0 0 0 11px var(--steel-rule);
+  }
+  .panel__top {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-lg);
+    border-bottom: 2px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .panel__body {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+  }
+  .circuit {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr;
+    border-bottom: 1px solid var(--rule);
+    min-height: 5.25rem;
+  }
+  .circuit:nth-child(odd) {
+    border-right: 2px solid var(--ink);
+  }
+  .circuit:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+  .circuit__n {
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-stretch: 75%;
+    font-weight: 800;
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--copper-deep);
+    border-right: 1px solid var(--rule);
+    background: color-mix(in oklch, var(--paper-2) 60%, transparent);
+  }
+  .circuit:nth-child(even) {
+    grid-template-columns: 1fr 3.25rem;
+  }
+  .circuit:nth-child(even) .circuit__n {
+    order: 2;
+    border-right: 0;
+    border-left: 1px solid var(--rule);
+  }
+  .circuit__text {
+    display: grid;
+    align-content: center;
+    gap: 0.15rem;
+    padding: var(--space-sm) var(--space-md);
+  }
+  .circuit__text strong {
+    font-family: var(--font-display);
+    font-stretch: 100%;
+    font-weight: 750;
+    font-size: 1.08rem;
+    line-height: 1.2;
+  }
+  .circuit__text span {
+    font-size: 0.9rem;
+    line-height: 1.35;
+    color: var(--ink-2);
+  }
+  .circuit:last-child strong {
+    color: var(--copper-deep);
+  }
+
+  /* ---------- Split ---------- */
+  .split {
+    padding-block: var(--section);
+  }
+  .split__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.5rem, 1rem + 5vw, 6rem);
+  }
+  .split__item {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .split__item:nth-child(2) {
+    margin-top: clamp(0rem, -2rem + 8vw, 6rem);
+  }
+  .split__art {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
+  }
+  .split__kicker {
+    color: var(--copper-deep);
+  }
+  .split h3 {
+    font-size: var(--step-2);
+    font-stretch: 104%;
+    max-width: 22ch;
+  }
+  .split p:not(.label) {
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+
+  /* ---------- Process ---------- */
+  .process {
+    padding-block: var(--section);
+    background: var(--paper-2);
+    border-block: 1px solid var(--rule);
+  }
+  .process__head {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+  .process__head .label {
+    color: var(--copper-deep);
+  }
+  .process__head h2 {
+    font-size: var(--step-3);
+    font-stretch: 110%;
+  }
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-xl);
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 0;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 18px, transparent 18px 26px);
+  }
+  .step {
+    position: relative;
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+  }
+  .step__node {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: var(--space-md);
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    background: var(--paper);
+    font-family: var(--font-display);
+    font-weight: 850;
+    font-size: 1.15rem;
+  }
+  .step:last-child .step__node {
+    background: var(--copper);
+    border-color: var(--copper-deep);
+    color: var(--paper);
+  }
+  .step h3 {
+    font-size: var(--step-1);
+    font-stretch: 105%;
+  }
+  .step p {
+    color: var(--ink-2);
+    font-size: 1rem;
+    max-width: 30ch;
+  }
+
+  /* ---------- Quote ---------- */
+  .quote {
+    padding-block: var(--section);
+  }
+  .quote__in {
+    display: grid;
+    gap: var(--space-xl);
+    justify-items: start;
+  }
+  .quote blockquote {
+    margin: 0;
+  }
+  .quote blockquote p {
+    font-family: var(--font-display);
+    font-stretch: 118%;
+    font-weight: 800;
+    font-size: var(--step-4);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    max-width: 16ch;
+  }
+  .quote__by {
+    color: var(--ink-3);
+  }
+  .quote__by .label {
+    color: var(--ink);
+  }
+
+  /* ---------- Area ---------- */
+  .area-sec {
+    background: var(--steel);
+    color: var(--on-steel);
+    padding-block: var(--section);
+  }
+  .area-sec__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: center;
+  }
+  .area-sec__copy {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .area-sec__copy .label {
+    color: var(--copper-glow);
+  }
+  .area-sec h2 {
+    font-size: var(--step-3);
+    font-stretch: 108%;
+  }
+  .area-sec__copy > p:not(.label) {
+    color: var(--on-steel-2);
+    max-width: 42ch;
+    line-height: 1.7;
+  }
+  .cities {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--steel-rule);
+  }
+  .cities li {
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--steel-rule);
+    font-family: var(--font-display);
+    font-stretch: 95%;
+    font-weight: 650;
+  }
+  .area-sec__note {
+    font-size: var(--step--1);
+  }
+
+  /* ---------- Contact ---------- */
+  .contact {
+    padding-block: var(--section);
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: end;
+  }
+  .contact .label {
+    color: var(--copper-deep);
+  }
+  .contact h2 {
+    margin-top: var(--space-md);
+    font-size: var(--step-3);
+    font-stretch: 108%;
+    max-width: 16ch;
+  }
+  .contact__phone {
+    display: inline-block;
+    margin-top: var(--space-xl);
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-weight: 850;
+    font-size: clamp(2.4rem, 1.2rem + 3.6vw, 4.75rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--copper-deep);
+    text-decoration: none;
+    border-bottom: 4px solid currentColor;
+    padding-bottom: var(--space-xs);
+    transition: color 180ms var(--ease-out);
+    white-space: nowrap;
+  }
+  .contact__phone:hover {
+    color: var(--ink);
+  }
+  .contact__sub {
+    margin-top: var(--space-lg);
+    max-width: 46ch;
+    color: var(--ink-2);
+  }
+  .contact__facts {
+    margin: 0;
+    display: grid;
+    border: 2px solid var(--ink);
+  }
+  .contact__facts > div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+  }
+  .contact__facts > div + div {
+    border-top: 1px solid var(--rule);
+  }
+  .contact__facts dt {
+    padding-top: 0.2rem;
+  }
+  .contact__facts dd {
+    margin: 0;
+    line-height: 1.5;
+  }
+  .contact__facts a {
+    display: inline-block;
+    margin-top: var(--space-xs);
+    font-weight: 700;
+    color: var(--copper-deep);
+    text-underline-offset: 3px;
+  }
+
+  /* ---------- Footer ---------- */
+  .foot {
+    background: var(--ink);
+    color: var(--on-steel-2);
+    padding-block: var(--space-2xl);
+    font-size: var(--step--1);
+  }
+  .foot__in {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+  .foot strong {
+    color: var(--on-steel);
+  }
+
+  /* ---------- Mobile call bar ---------- */
+  .callbar {
+    display: none;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 64rem) {
+    .nav {
+      display: none;
+    }
+    .plate {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .plate__head {
+      grid-column: 1 / -1;
+      writing-mode: horizontal-tb;
+      transform: none;
+      padding: var(--space-xs) var(--space-lg) !important;
+      place-items: center start;
+    }
+    .plate > div:not(.plate__head) {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .plate > div:nth-child(odd):not(.plate__head) {
+      border-left: 1px solid var(--rule);
+    }
+    .plate > div:last-child {
+      grid-column: 1 / -1;
+      border-left: 0 !important;
+    }
+    .services__grid,
+    .area-sec__grid,
+    .contact__grid {
+      grid-template-columns: 1fr;
+    }
+    .services__intro {
+      position: static;
+    }
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--space-2xl);
+    }
+    .steps::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .bar__call {
+      display: none;
+    }
+    .bar__in {
+      min-height: 4rem;
+    }
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+    .hero__art {
+      max-width: 26rem;
+    }
+    .hero__title {
+      font-stretch: 105%;
+    }
+    .hero__ctas .btn {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+    .panel__body {
+      grid-template-columns: 1fr;
+    }
+    .circuit,
+    .circuit:nth-child(even) {
+      grid-template-columns: 3rem 1fr;
+      border-right: 0 !important;
+      min-height: 0;
+    }
+    .circuit:nth-child(even) .circuit__n {
+      order: 0;
+      border-left: 0;
+      border-right: 1px solid var(--rule);
+    }
+    .circuit:nth-last-child(2) {
+      border-bottom: 1px solid var(--rule);
+    }
+    .panel {
+      box-shadow:
+        0 0 0 6px var(--steel-2),
+        0 0 0 7px var(--steel-rule);
+    }
+    .split__grid {
+      grid-template-columns: 1fr;
+    }
+    .split__item:nth-child(2) {
+      margin-top: 0;
+    }
+    .steps {
+      grid-template-columns: 1fr;
+      row-gap: var(--space-xl);
+    }
+    .step {
+      grid-template-columns: 3rem 1fr;
+      column-gap: var(--space-lg);
+    }
+    .step__node {
+      grid-row: span 2;
+      margin: 0;
+    }
+    .contact__phone {
+      font-size: clamp(2.1rem, 9.5vw, 3rem);
+    }
+    .quote blockquote p {
+      font-size: clamp(2rem, 9vw, 2.8rem);
+      font-stretch: 96%;
+    }
+    .contact__facts > div {
+      grid-template-columns: 1fr;
+      gap: var(--space-xs);
+    }
+    .foot {
+      padding-bottom: 6rem;
+    }
+    .callbar {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 3.75rem;
+      padding: var(--space-sm) var(--space-md) calc(var(--space-sm) + env(safe-area-inset-bottom));
+      background: var(--copper-deep);
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-weight: 750;
+      font-size: 1.08rem;
+      text-decoration: none;
+      border-top: 2px solid var(--ink);
+    }
+  }
+</style>

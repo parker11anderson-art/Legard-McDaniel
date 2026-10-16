@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { business as b } from '../data/business';
+---
+<Base title={`Page not found | ${b.name}`} description="This page doesn't exist.">
+  <main id="main" class="nf wrap">
+    <p class="label">Error 404 · Open circuit</p>
+    <h1>Nothing on this circuit.</h1>
+    <p>The page you were looking for isn't here. The phone still works.</p>
+    <div class="nf__ctas">
+      <a class="btn" href={b.phoneHref}>Call {b.phone}</a>
+      <a class="btn btn--ghost" href="/">Back to the homepage</a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    align-content: center;
+    gap: var(--space-lg);
+    padding-block: var(--space-4xl);
+  }
+  .label {
+    color: var(--copper-deep);
+  }
+  h1 {
+    font-size: var(--step-4);
+    font-stretch: 115%;
+    max-width: 14ch;
+  }
+  p:not(.label) {
+    font-size: var(--step-1);
+    color: var(--ink-2);
+  }
+  .nf__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+</style>

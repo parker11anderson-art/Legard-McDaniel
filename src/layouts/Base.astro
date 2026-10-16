@@ -1,0 +1,57 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/public-sans';
+import '../styles/global.css';
+import { business } from '../data/business';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = `Licensed residential and commercial electricians in Mesa, AZ since ${business.founded}. Repairs, panel upgrades, lighting, and tenant improvements across the East Valley. Call ${business.phone}.`,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Electrician',
+  name: business.legalName,
+  telephone: business.phone,
+  url: Astro.site?.toString(),
+  foundingDate: String(business.founded),
+  openingHours: business.hoursSchema,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.street,
+    addressLocality: business.city,
+    addressRegion: business.region,
+    postalCode: business.postal,
+    addressCountry: 'US',
+  },
+  areaServed: business.serviceArea.map((c) => ({ '@type': 'City', name: `${c}, AZ` })),
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#f5efe4" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

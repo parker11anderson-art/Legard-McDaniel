@@ -1,0 +1,102 @@
+---
+// Commercial callout drawing: a strip-center suite mid tenant improvement.
+const troffers = [0, 1, 2, 3];
+---
+<svg class="drawing" viewBox="0 0 640 380" role="img" aria-labelledby="store-title">
+  <title id="store-title">Cutaway line drawing of a commercial suite under tenant improvement with callouts for lighting, conduit runs, dedicated circuits and the electrical room</title>
+
+  <line x1="0" y1="300" x2="640" y2="300" stroke="var(--ink)" stroke-width="2" />
+
+  <!-- Building shell -->
+  <rect x="60" y="120" width="520" height="180" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5" />
+  <rect x="48" y="104" width="544" height="20" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2.5" />
+
+  <!-- Ceiling grid cutaway -->
+  <line x1="60" y1="150" x2="580" y2="150" stroke="var(--ink)" stroke-width="1.5" />
+  {
+    troffers.map((i) => (
+      <g>
+        <rect x={110 + i * 110} y="150" width="60" height="10" fill="var(--blueprint)" stroke="var(--ink)" stroke-width="1.5" />
+        <path d={`M${120 + i * 110} 160 L${110 + i * 110} 182 M${160 + i * 110} 160 L${170 + i * 110} 182`} stroke="var(--copper-glow)" stroke-width="1" stroke-dasharray="3 4" />
+      </g>
+    ))
+  }
+
+  <!-- Conduit run above ceiling -->
+  <path d="M84 300 V136 H556" fill="none" stroke="var(--ink)" stroke-width="5" />
+  <path class="current" d="M84 300 V136 H556" fill="none" stroke="var(--copper)" stroke-width="2" stroke-dasharray="8 18" />
+  <g stroke="var(--ink)" stroke-width="2">
+    <line x1="140" y1="136" x2="140" y2="150" /><line x1="250" y1="136" x2="250" y2="150" />
+    <line x1="360" y1="136" x2="360" y2="150" /><line x1="470" y1="136" x2="470" y2="150" />
+  </g>
+
+  <!-- Electrical room / panelboard -->
+  <rect x="70" y="200" width="30" height="60" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2" />
+  <g stroke="var(--ink-3)" stroke-width="1">
+    <line x1="76" y1="212" x2="94" y2="212" /><line x1="76" y1="222" x2="94" y2="222" />
+    <line x1="76" y1="232" x2="94" y2="232" /><line x1="76" y1="242" x2="94" y2="242" />
+  </g>
+
+  <!-- Storefront glazing -->
+  <g fill="none" stroke="var(--ink)" stroke-width="2">
+    <rect x="300" y="190" width="260" height="110" fill="var(--blueprint)" fill-opacity="0.35" />
+    <line x1="365" y1="190" x2="365" y2="300" /><line x1="430" y1="190" x2="430" y2="300" /><line x1="495" y1="190" x2="495" y2="300" />
+  </g>
+
+  <!-- Counter with receptacles -->
+  <rect x="140" y="250" width="120" height="50" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2" />
+  <g fill="var(--copper)">
+    <rect x="160" y="236" width="8" height="10" /><rect x="196" y="236" width="8" height="10" /><rect x="232" y="236" width="8" height="10" />
+  </g>
+
+  <!-- Ladder -->
+  <g stroke="var(--ink)" stroke-width="2" fill="none">
+    <path d="M272 300 L290 176 L308 300" />
+    <line x1="278" y1="260" x2="302" y2="260" /><line x1="282" y1="230" x2="298" y2="230" /><line x1="285" y1="204" x2="295" y2="204" />
+  </g>
+
+  <!-- Callouts -->
+  <g fill="none" stroke="var(--ink-2)" stroke-width="1.2">
+    <path d="M85 230 L40 60 H10" />
+    <path d="M250 136 L280 40 H360" />
+    <path d="M200 240 L170 352 H90" />
+    <path d="M470 155 L560 60 H630" />
+  </g>
+  <g fill="var(--copper)">
+    <circle cx="85" cy="230" r="4" /><circle cx="250" cy="136" r="4" /><circle cx="200" cy="240" r="4" /><circle cx="470" cy="155" r="4" />
+  </g>
+  <g class="c-text">
+    <text x="10" y="52">PANELBOARDS</text>
+    <text x="282" y="32">CONDUIT + FEEDERS</text>
+    <text x="90" y="372">DEDICATED CIRCUITS</text>
+    <text x="630" y="52" text-anchor="end">LIGHTING RETROFIT</text>
+  </g>
+</svg>
+
+<style>
+  .drawing {
+    width: 100%;
+    height: auto;
+  }
+  .c-text text {
+    font-family: var(--font-display);
+    font-stretch: 80%;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    fill: var(--ink);
+  }
+  .current {
+    animation: flow 3s linear infinite;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -52;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .current {
+      animation: none;
+    }
+  }
+</style>

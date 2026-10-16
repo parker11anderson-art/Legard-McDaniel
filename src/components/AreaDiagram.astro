@@ -1,0 +1,98 @@
+---
+// Service area drawn as a one-line diagram fed from the Mesa shop.
+// Node positions are roughly geographic (north up).
+const nodes = [
+  { name: 'Scottsdale', x: 150, y: 70, anchor: 'end', dx: -14, dy: 5 },
+  { name: 'Tempe', x: 110, y: 200, anchor: 'end', dx: -14, dy: 5 },
+  { name: 'Chandler', x: 150, y: 330, anchor: 'end', dx: -14, dy: 5 },
+  { name: 'Gilbert', x: 290, y: 330, anchor: 'middle', dx: 0, dy: 30 },
+  { name: 'Queen Creek', x: 430, y: 360, anchor: 'start', dx: 14, dy: 5 },
+  { name: 'Apache Junction', x: 470, y: 170, anchor: 'start', dx: -10, dy: -18 },
+  { name: 'Gold Canyon', x: 560, y: 250, anchor: 'end', dx: 0, dy: 30 },
+];
+const shop = { x: 290, y: 200 };
+---
+<svg class="area" viewBox="0 0 640 420" role="img" aria-labelledby="area-title">
+  <title id="area-title">Diagram of the East Valley service area fed from the Mesa shop: Scottsdale, Tempe, Chandler, Gilbert, Queen Creek, Apache Junction and Gold Canyon</title>
+
+  <g fill="none" stroke="var(--steel-rule)" stroke-width="1">
+    <circle cx={shop.x} cy={shop.y} r="90" stroke-dasharray="2 6" />
+    <circle cx={shop.x} cy={shop.y} r="180" stroke-dasharray="2 6" />
+  </g>
+
+  <g fill="none" stroke="var(--on-steel-2)" stroke-width="1.6">
+    {nodes.map((n) => <path d={`M${shop.x} ${shop.y} H${(shop.x + n.x) / 2} V${n.y} H${n.x}`} />)}
+  </g>
+  <g class="current" fill="none" stroke="var(--copper-glow)" stroke-width="2" stroke-dasharray="6 16">
+    {nodes.map((n) => <path d={`M${shop.x} ${shop.y} H${(shop.x + n.x) / 2} V${n.y} H${n.x}`} />)}
+  </g>
+
+  {
+    nodes.map((n) => (
+      <g>
+        <circle cx={n.x} cy={n.y} r="7" fill="var(--steel)" stroke="var(--on-steel)" stroke-width="2" />
+        <text x={n.x + n.dx} y={n.y + n.dy} text-anchor={n.anchor} class="city">
+          {n.name}
+        </text>
+      </g>
+    ))
+  }
+
+  <rect x={shop.x - 16} y={shop.y - 16} width="32" height="32" fill="var(--copper)" stroke="var(--on-steel)" stroke-width="2" />
+  <text x={shop.x} y={shop.y - 46} text-anchor="middle" class="shop">MESA SHOP</text>
+  <text x={shop.x} y={shop.y - 28} text-anchor="middle" class="sub">920 E JAVELINA AVE</text>
+
+  <g class="compass" transform="translate(600 40)">
+    <path d="M0 -18 L6 6 L0 2 L-6 6 Z" fill="var(--on-steel)" />
+    <text y="22" text-anchor="middle" class="sub">N</text>
+  </g>
+</svg>
+
+<style>
+  .area {
+    width: 100%;
+    height: auto;
+  }
+  text {
+    paint-order: stroke;
+    stroke: var(--steel);
+    stroke-width: 6px;
+    stroke-linejoin: round;
+  }
+  .city {
+    font-family: var(--font-display);
+    font-stretch: 90%;
+    font-weight: 650;
+    font-size: 16px;
+    fill: var(--on-steel);
+  }
+  .shop {
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    fill: var(--copper-glow);
+  }
+  .sub {
+    font-family: var(--font-display);
+    font-stretch: 80%;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    fill: var(--on-steel-2);
+  }
+  .current path {
+    animation: flow 2.8s linear infinite;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -44;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .current path {
+      animation: none;
+    }
+  }
+</style>
