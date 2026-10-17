@@ -19,18 +19,23 @@ Items marked `VERIFY` came from third-party directories. Confirm them with the o
 
 ## Deploy (Cloudflare Workers, free tier)
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Connect to Git** → pick this repo.
-2. Build settings:
+The repo's default branch is `claude/dreamy-galileo-ar0emy`; Cloudflare treats it as production.
+
+1. Cloudflare dashboard → **Compute (Workers)** → **Workers & Pages** → **Create** → **Import a repository**.
+2. Authorize the Cloudflare GitHub app for `parker11anderson-art/Legard-McDaniel` only, then select the repo.
+3. Settings:
 
    | Field | Value |
    |---|---|
-   | Framework preset | Astro |
+   | Project name | `legard-mcdaniel` (must match `wrangler.jsonc`) |
    | Build command | `npm run build` |
-   | Build output directory | `dist` |
+   | Deploy command | `npx wrangler deploy` |
    | Environment variable | `NODE_VERSION` = `22.22.0` |
 
-3. Save and Deploy. Every push to the production branch redeploys.
-4. Custom domain: project → Settings → Domains & Routes → add `legardmcdaniel.com`.
+4. **Create and deploy.** The site goes live at `https://legard-mcdaniel.<account>.workers.dev`. Every push redeploys.
+5. Custom domain: project → Settings → Domains & Routes → add `legardmcdaniel.com`.
+
+From a machine with Cloudflare access you can also run `npx wrangler login` then `npm run deploy`.
 
 ## Design
 
